@@ -134,15 +134,19 @@
         .shake {
             animation: shake 0.5s ease-in-out;
         }
+
+        .scaleUp {
+            animation: scaleUp 0.5s ease-in-out forwards;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>💖 Thông Điệp Yêu Thương 💖</h1>
-        <p class="message">Chị có thể tha lỗi cho em không? 🥺</p>
+        <h1>💖 Tạ lỗi 💖</h1>
+        <p class="message">Can you forgive me? 🥺</p>
         <div class="buttons">
-            <button id="acceptBtn">Đồng ý ❤️</button>
-            <button id="rejectBtn">Từ chối 💔</button>
+            <button id="acceptBtn">Accept ❤️</button>
+            <button id="rejectBtn">Dismiss 💔</button>
         </div>
     </div>
 
@@ -167,8 +171,8 @@
             
             container.style.animation = 'scaleUp 0.5s ease-in-out forwards';
             container.innerHTML = `
-                <h1>Cảm ơn chị gấc nhiều! 💖</h1>
-                <p class="message">Emmm xin lỗi và đội ơn chị nhiều lắm! 🥰</p>
+                <h1>Thank_You_So_Much! 💖</h1>
+                <p class="message">I'm so sorry and thanks so much! 🥰</p>
             `;
             for(let i = 0; i < 10; i++) {
                 setTimeout(() => createHeart(), i * 300);
@@ -179,16 +183,16 @@
             rejectBtn.classList.add('shake');
             setTimeout(() => rejectBtn.classList.remove('shake'), 500);
             const messages = [
-                '🥺 Làm ơn đừng giận emmm mò...',
-                '😢 Emmm hứa sẽ không tái phạm nữa',
-                '🙏 Cho emmmm cơ hội nữa đi màaaaa',
+                '🥺 Pls do not mad with me...',
+                '😢 I am promise that i do not do that again',
+                '🙏 Pls give me a chance',
             ];
 
             const popup = document.createElement('div');
             popup.className = 'popup';
             popup.innerHTML = `
                 <p>${messages[popupCount % messages.length]}</p>
-                <button id="acceptBtn" style="margin-top: 1rem;">Đồng ý ❤️</button>
+                <button id="acceptBtn" style="margin-top: 1rem;">Accept ❤️</button>
             `;
 
             popup.style.top = Math.random() * (window.innerHeight - 200) + 'px';
