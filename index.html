@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thông Điệp Yêu Thương</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(120deg, #ffb6c1, #fff);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 500px;
+            width: 90%;
+        }
+
+        h1 {
+            color: #ff69b4;
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+        }
+
+        .message {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            color: #666;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        button {
+            padding: 0.8rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: transform 0.3s, background-color 0.3s;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+        }
+
+        #acceptBtn {
+            background-color: #ff69b4;
+            color: white;
+        }
+
+        #rejectBtn {
+            background-color: #f8f9fa;
+            color: #ff69b4;
+            border: 2px solid #ff69b4;
+        }
+
+        .heart {
+            position: fixed;
+            font-size: 1.5rem;
+            animation: flyHeart 3s ease-in-out;
+            opacity: 0;
+            z-index: 1000;
+        }
+
+        @keyframes flyHeart {
+            0% {
+                transform: translateY(0) scale(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) scale(1);
+                opacity: 0;
+            }
+        }
+
+        .popup {
+            position: fixed;
+            background: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            z-index: 1001;
+            text-align: center;
+            animation: popIn 0.3s ease-out;
+        }
+
+        @keyframes popIn {
+            from {
+                transform: scale(0.5);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        @keyframes scaleUp {
+            from { transform: scale(1); }
+            to { transform: scale(1.2); }
+        }
+
+        .shake {
+            animation: shake 0.5s ease-in-out;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>💖 Thông Điệp Yêu Thương 💖</h1>
+        <p class="message">Chị có thể tha lỗi cho em không? 🥺</p>
+        <div class="buttons">
+            <button id="acceptBtn">Đồng ý ❤️</button>
+            <button id="rejectBtn">Từ chối 💔</button>
+        </div>
+    </div>
+
+    <script>
+        const acceptBtn = document.getElementById('acceptBtn');
+        const rejectBtn = document.getElementById('rejectBtn');
+        const container = document.querySelector('.container');
+        let popupCount = 0;
+
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+            heart.innerHTML = '❤️';
+            heart.style.left = Math.random() * window.innerWidth + 'px';
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 3000);
+        }
+
+        function showThankYouMessage() {
+            const allPopups = document.querySelectorAll('.popup');
+            allPopups.forEach(popup => popup.remove());
+            
+            container.style.animation = 'scaleUp 0.5s ease-in-out forwards';
+            container.innerHTML = `
+                <h1>Cảm ơn chị gấc nhiều! 💖</h1>
+                <p class="message">Emmm xin lỗi và đội ơn chị nhiều lắm! 🥰</p>
+            `;
+            for(let i = 0; i < 10; i++) {
+                setTimeout(() => createHeart(), i * 300);
+            }
+        }
+
+        function createPopup() {
+            rejectBtn.classList.add('shake');
+            setTimeout(() => rejectBtn.classList.remove('shake'), 500);
+            const messages = [
+                '🥺 Làm ơn đừng giận emmm mò...',
+                '😢 Emmm hứa sẽ không tái phạm nữa',
+                '🙏 Cho emmmm cơ hội nữa đi màaaaa',
+            ];
+
+            const popup = document.createElement('div');
+            popup.className = 'popup';
+            popup.innerHTML = `
+                <p>${messages[popupCount % messages.length]}</p>
+                <button id="acceptBtn" style="margin-top: 1rem;">Đồng ý ❤️</button>
+            `;
+
+            popup.style.top = Math.random() * (window.innerHeight - 200) + 'px';
+            popup.style.left = Math.random() * (window.innerWidth - 300) + 'px';
+
+            document.body.appendChild(popup);
+            popup.querySelector('button').onclick = () => {
+                popup.remove();
+                showThankYouMessage();
+            };
+
+            popupCount++;
+        }
+
+        acceptBtn.onclick = showThankYouMessage;
+        rejectBtn.onclick = createPopup;
+    </script>
+</body>
+</html>
